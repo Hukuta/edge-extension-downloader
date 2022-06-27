@@ -17,7 +17,7 @@ import (
 )
 
 const (
-	chromeWebStoreURL = "https://clients2.google.com/service/update2/crx?response=redirect"
+	chromeWebStoreURL = "https://edge.microsoft.com/extensionwebstorebase/v1/crx?response=redirect"
 	reExtendionID     = `[a-z]{32}`
 )
 
@@ -133,38 +133,10 @@ func createDownloadURL(extensionList []string) {
 		}
 		extensionID := match[0]
 
-		// Omitting this value is allowed, but add it just in case.
-		// Source: http://cs.chromium.org/file:omaha_query_params.
-		// cc%20GetProdIdString
-		productID := "chromiumcrx"
-
-		// Channel is "unknown" on Chromium on ArchLinux, so using "unknown"
-		// will probably be fine for everyone.
-		productChannel := "unknown"
-
-		// As of July, the Chrome Web Store sends 204 responses to user agents
-		// when their Chrome/Chromium version is older than version 31.0.1609.0
-		// so forcing a version in the future.
-		productVersion := "9999.0.9999.0"
-
-		// Different OS options available:  win, linux, mac, android, openbsd,
-		// cros.
-		os := "win"
-
-		// Different architecture availables: x86-32, x86-64, arm.
-		// Same goes for NaCl architecture,
-		arch := "x86-64"
 
 		url := chromeWebStoreURL
-		url += "&os=" + os
-		url += "&arch=" + arch
-		url += "&nacl_arch=" + arch
-		url += "&prod=" + productID
-		url += "&prodchannel=" + productChannel
-		url += "&prodversion=" + productVersion
-		url += "&acceptformat=" + "crx2,crx3"
 		url += "&x=id%3D" + extensionID
-		url += "%26uc"
+		url += "%26installsource%3Dondemand%26uc"
 
 		b, err := downloadFile(url)
 		if err != nil {
