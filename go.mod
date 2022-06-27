@@ -1,4 +1,4 @@
-module github.com/LordNoteworthy/chrome-extension-downloader
+module github.com/Hukuta/edge-extension-downloader
 
 go 1.15
 
